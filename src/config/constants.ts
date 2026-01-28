@@ -13,5 +13,5 @@ export const CONSTANTS = {
   LOG_LEVEL: process.env.LOG_LEVEL || 'info',
 
   // URLs
-  BASE_URL: process.env.BASE_URL || 'http://localhost:3000',
+  BASE_URL: process.env.BASE_URL || 'https://opensource-demo.orangehrmlive.com/',
 };

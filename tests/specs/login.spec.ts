@@ -5,14 +5,17 @@
 
 import { test, expect } from '@playwright/test';
 import { LoginPage } from '../../src/pages/LoginPage';
+import { DashboardPage } from '../../src/pages/DashboardPage';
 import { Logger } from '../../src/utils/logger';
 
 test.describe('Login Page', () => {
   let loginPage: LoginPage;
+  let dashboardPage: DashboardPage;
 
   test.beforeEach(({ page }) => {
     // Initialize LoginPage object before each test
     loginPage = new LoginPage(page);
+    dashboardPage = new DashboardPage(page);
     Logger.info('Initializing LoginPage object');
   });
 
@@ -84,7 +87,15 @@ test.describe('Login Page', () => {
     // Assertions: Verify successful login
     const currentUrl = await page.url();
     expect(currentUrl).toContain('dashboard');
+// Verify dashboard page loaded
+    const isDashboardLoaded = await dashboardPage.verifyDashboardLoaded();
+    expect(isDashboardLoaded).toBe(true);
 
+    // Verify dashboard title
+    const dashboardTitle = await dashboardPage.getDashboardTitle();
+    expect(dashboardTitle).toBe('Dashboard');
+
+    await dashboardPage.navigateToDashboard();
     Logger.info('TC-002: Test passed - Login successful with valid credentials');
   });
 });
